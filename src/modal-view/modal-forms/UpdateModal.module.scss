@@ -1,0 +1,32 @@
+.main {
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+
+    .input {
+        padding: 10px;
+        margin: 10px;
+        width: 300px;
+    }
+
+    >button {
+        margin: 30px auto;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border: 1px solid gray;
+        padding: 0.6em 1.2em;
+        font-size: 1em;
+        font-weight: 500;
+        font-family: inherit;
+        background-color: #4890a8;
+        color: white;
+        cursor: pointer;
+        transition: all 0.25s;
+            &:hover {
+                border-color: #ddd59a;
+                background-color: #ffec1b;
+                color: #4890a8;
+          }
+    }
+
+}

@@ -1,0 +1,32 @@
+.main {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+
+    .text {
+        color: red;
+        display: block;
+        font-size: 25px; 
+        padding: 10px;
+    }
+
+    >button {
+        margin: 30px auto;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border: 1px solid gray;
+        padding: 0.6em 1.2em;
+        font-size: 1em;
+        font-weight: 500;
+        font-family: inherit;
+        background-color: #4890a8;
+        color: white;
+        cursor: pointer;
+        transition: all 0.25s;
+            &:hover {
+            border-color: #b33a62;
+            background-color: rgb(232, 84, 84);
+            color: rgb(130, 231, 167);
+          }
+    }
+}
