@@ -1,6 +1,6 @@
 import styles from './Seminars.module.scss'
 import { networkService } from '../../services/network.service'
-import { useQueries, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import SeminarItem from '../items/SeminarItem'
 
 
