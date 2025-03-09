@@ -1,7 +1,9 @@
-interface ISeminar {
-    id: 1,
+export interface IPost {
+    id: number,
     title: string,
-    description: string,
-    date: string,
-    time: string,
+    body: string
 }
+
+export interface IPostId extends Pick<IPost, 'id'> {}
+
+export type ResponseIPost = Array<IPost>

@@ -3,18 +3,15 @@ import styles from './SeminarItem.module.scss'
 import Modal from '../../modal-view/Modal'
 import DeleteModal from '../../modal-view/modal-forms/DeleteModal'
 import UpdateModal from '../../modal-view/modal-forms/UpdateModal'
+import { IPost } from '../../types'
 
 interface SeminarItemProps {
-    id: number,
-    title: string,
-    description: string,
-    date: string,
-    time: string,
+    item: IPost
 }
 
 const SeminarItem: FC<SeminarItemProps> = (props) => {
 
-    const { id, title, description, date, time } = props
+    const { item } = props
 
     const [deleteModal, setDeleteModal] = useState(false)
     const [updateModal, setUpdateModal] = useState(false)
@@ -23,10 +20,10 @@ const SeminarItem: FC<SeminarItemProps> = (props) => {
         <div className={styles.item}>
             <div className={styles.info}>
                 <div className={styles.title}>
-                    Название: <i>{title}. состоится: {date}, {time}</i>
+                    <b>Название: </b> <i>{item.title}</i>
                 </div>
                 <div className={styles.description}>
-                    Описание: <i>{description}</i>
+                    <b>Описание: </b> <i>{item.body}</i>
                 </div>
             </div>
             <div className={styles.buttons}>
@@ -40,10 +37,10 @@ const SeminarItem: FC<SeminarItemProps> = (props) => {
                 </button>
             </div>
             <Modal visible={deleteModal} setVisible={setDeleteModal}>
-                <DeleteModal id={id}/>
+                <DeleteModal id={item.id}/>
             </Modal>
             <Modal visible={updateModal} setVisible={setUpdateModal}>
-                <UpdateModal id={id}/>
+                <UpdateModal id={item.id}/>
             </Modal>
         </div>
     )

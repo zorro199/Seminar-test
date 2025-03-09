@@ -1,38 +1,43 @@
 import styles from './DeleteModal.module.scss'
 import { networkService } from '../../services/network.service'
-import { useQueries, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FC } from 'react'
+import { IPostId, IPost, ResponseIPost } from '../../types'
 
-interface DeleteModalProps {
-    id: number
-}
+
+interface DeleteModalProps extends IPostId {}
 
 const DeleteModal: FC<DeleteModalProps> = (props) => {
     const { id } = props
-
     const queryClient = useQueryClient()
-    
-    const [getSeminars] = useQueries({
-        queries: [
-            {
-                queryKey: ['get-seminars'],
-                queryFn: () => networkService.getData()
-            }
-        ]
-    })
 
-    const handleDeleteItem = async (id: number) => {
-        await networkService.deleteSeminar(id)
-        queryClient.refetchQueries({ // для обновления списка без перезагрузки
-            queryKey: ['get-seminars'] // по ключу 
+    function useListRemove() {
+        return useMutation({
+            mutationKey: ['delete'],
+            mutationFn: networkService.deletePost,
+            onSuccess: (_, variable: IPost['id']) => {
+                queryClient.setQueryData(
+                    ['get list'],
+                    (prev: ResponseIPost) => prev.filter(item => item.id !== variable)
+                ),
+                alert('Пост успешно удален')
+            },
+            onError: (error) => {
+                console.warn('check delete error -> ', error)
+            }
         })
-        getSeminars.data?.filter(item => item.id !== id)
+    }
+
+    const listRemove = useListRemove()
+
+    const handleDelete = (id: number) => {
+        listRemove.mutate(id)
     }
 
     return (
         <div className={styles.main}>
-            <span className={styles.text}> Действительно хотите удалить ? </span>
-            <button onClick={() => handleDeleteItem(id)}>УДАЛИТЬ</button>
+            <span className={styles.text}> Действительно хотите удалить ?</span>
+            <button onClick={() => handleDelete(id)}>УДАЛИТЬ</button>
         </div>
     )
 }

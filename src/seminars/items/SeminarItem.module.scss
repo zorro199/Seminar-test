@@ -1,7 +1,7 @@
 .item {
     display: flex;
     width: 80%;
-    height: 100px;
+    height: 25%;
     justify-content: space-between;
     align-items: center;
     border-radius: 12px;
@@ -10,7 +10,7 @@
     padding: 20px;
 
     .info {
-        width: 80%;
+        width: 60%;
         text-align: start;
         font-size: 20px;
 
@@ -24,7 +24,7 @@
     }
 
     .buttons {
-        width: 20%;
+        width: 40%;
 
         .delete {
             width: 100%;

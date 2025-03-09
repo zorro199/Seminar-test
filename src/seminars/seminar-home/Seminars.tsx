@@ -1,42 +1,34 @@
 import styles from './Seminars.module.scss'
 import { networkService } from '../../services/network.service'
-import { useQueries } from '@tanstack/react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import SeminarItem from '../items/SeminarItem'
 
-// Локально развернутый простенький json-server (npm i json-server)
-// данные находятся в файле db.json() 
-// его путь по умолчания http://localhost:3000/seminars
-// для запуска сервера нужно ввести в строке npx json-server db.json
-// после обновления логики работы с апи иногда требуется перезапуск сервера 
 
 const Seminars = () => {
 
-    // использование библиотеки react-query для более удобной и полезной работы с апи
-    const [getSeminars] = useQueries({
-        queries: [
+    const { data: getSeminars, isLoading } = useQuery(
             {
-                queryKey: ['get-seminars'],
-                queryFn: () => networkService.getData()
+                queryKey: ['get list'],
+                queryFn: () => networkService.getData(),
             }
-        ]
-    })
-    
+        )
+
+    if (isLoading) {
+        return <div style={{color: 'red', fontSize: '30px' }}>Загрузка...</div>
+    } 
+
     return (
         <div className={styles.main}>
-            <header className={styles.header}>Seminars Test</header>
+            <header className={styles.header}>Seminars Posts</header>
             <div className={styles.item_list}>
                 {
-                    getSeminars.data?.length ? (
-                        getSeminars.data?.map(item => (
-                            <SeminarItem key={item.id}
-                                         id={item.id} 
-                                         title={item.title} 
-                                         description={item.description} 
-                                         date={item.date} 
-                                         time={item.time} />
+                    getSeminars?.length ? (
+                        getSeminars?.map(item => (
+                            <SeminarItem key={item.id} 
+                                         item={item} />
                         ))
                     ) : (
-                        <div className={styles.error}>Семинары не найдены</div>
+                        <div className={styles.error}>Посты не найдены</div>
                     )
                 }
             </div>

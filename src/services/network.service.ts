@@ -1,26 +1,26 @@
 import axios from "axios"
+import { IPost } from "../types"
+
 
 class NetworkService {
 
-    private url = 'http://localhost:3000/seminars'
+    private url = 'https://jsonplaceholder.typicode.com/posts'
 
     async getData() {
-        const { data } = await axios.get<ISeminar[]>(this.url)
+        const { data } = await axios.get<IPost[]>(this.url)
         return data
     }
 
-    async deleteSeminar(id: number) {
-        const { data } = await axios.delete(`${this.url}/${id}`)
+     async deletePost(id: number) {
+        const { data } = await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
         return data
     }
 
-    async updateSeminar(id: number, title: string, description: string) {
-        const { data } = await axios.put(`${this.url}/${id}`, {
-            title,
-            description
-        })
+    async updatePost({id, payload}: {id: number, payload: Omit<IPost, 'id'>}) {
+        const { data } = await axios.put(`https://jsonplaceholder.typicode.com/posts/${id}`, payload)
         return data
     }
+
 }
 
 export const networkService = new NetworkService()
